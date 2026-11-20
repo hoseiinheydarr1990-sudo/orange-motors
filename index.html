@@ -1,1 +1,180 @@
 
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORANGE MOTORS | بازار خودرو ایران</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101010;color:#fff;font-family:Tahoma,Arial,sans-serif}
+header{background:#191919;padding:18px 5%;border-bottom:2px solid #ff7900;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-size:24px;font-weight:bold;color:#ff7900}
+.logo span{color:white}
+nav a{color:white;text-decoration:none;margin:0 8px;font-size:14px}
+button,.btn{background:#ff7900;color:#111;border:0;padding:12px 18px;border-radius:9px;font-weight:bold;cursor:pointer}
+.hero{padding:55px 6%;text-align:center;background:linear-gradient(135deg,#252525,#101010)}
+.hero h1{font-size:34px;margin:0 0 14px}
+.hero h1 span{color:#ff7900}
+.hero p{color:#ccc;line-height:2}
+.search{max-width:850px;margin:25px auto 0;display:flex;gap:8px;flex-wrap:wrap}
+input,select,textarea{background:#242424;color:white;border:1px solid #444;border-radius:8px;padding:13px;font:inherit;min-width:0}
+.search input{flex:1;min-width:180px}
+section{padding:30px 5%}
+.heading{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.heading h2{font-size:22px}
+.heading span{color:#ff7900}
+.filters{display:flex;gap:9px;flex-wrap:wrap;margin:15px 0}
+.filters select{flex:1;min-width:125px}
+.cars{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:17px}
+.car{background:#1d1d1d;border:1px solid #333;border-radius:13px;overflow:hidden}
+.car img{width:100%;height:155px;object-fit:cover;background:#333}
+.car-content{padding:14px}
+.car h3{margin:0 0 10px;font-size:17px}
+.details{color:#bbb;font-size:13px;line-height:2}
+.price{color:#ff8b19;font-size:18px;font-weight:bold;margin:12px 0}
+.city{color:#aaa;font-size:12px}
+.tag{background:#39230f;color:#ff9b39;padding:5px 9px;border-radius:6px;font-size:11px}
+.formbox{background:#1c1c1c;border:1px solid #444;border-radius:12px;padding:20px;max-width:650px;margin:auto}
+.formbox input,.formbox select,.formbox textarea{width:100%;margin:7px 0 14px}
+.formbox h2{color:#ff8b19}
+footer{text-align:center;padding:30px;background:#191919;color:#aaa;line-height:2}
+.empty{color:#aaa;text-align:center;padding:25px;display:none}
+@media(max-width:500px){.hero h1{font-size:26px}nav{width:100%}nav a{margin-left:10px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="logo">ORANGE <span>MOTORS</span></div>
+ <nav>
+  <a href="#cars">خرید خودرو</a>
+  <a href="#sell">فروش خودرو</a>
+  <a href="#about">درباره ما</a>
+ </nav>
+ <a href="#sell"><button>＋ ثبت آگهی</button></a>
+</header>
+
+<div class="hero">
+ <h1>بازار بزرگ <span>خودرو ایران</span></h1>
+ <p>خودروی مورد علاقه‌ات را پیدا کن یا ماشینت را برای فروش آگهی کن.</p>
+ <div class="search">
+  <input id="search" placeholder="نام خودرو یا مدل را بنویس...">
+  <button onclick="filterCars()">جست‌وجوی خودرو</button>
+ </div>
+</div>
+
+<section id="cars">
+ <div class="heading">
+  <h2>🚗 جدیدترین آگهی‌های <span>خودرو</span></h2>
+  <span>خودروهای سراسر ایران</span>
+ </div>
+ <div class="filters">
+  <select id="brand" onchange="filterCars()">
+   <option value="">همه برندها</option>
+   <option>ایران خودرو</option><option>سایپا</option>
+   <option>تویوتا</option><option>هیوندای</option>
+   <option>کیا</option>
+  </select>
+  <select id="city" onchange="filterCars()">
+   <option value="">همه شهرها</option>
+   <option>تهران</option><option>مشهد</option>
+   <option>اصفهان</option><option>شیراز</option>
+   <option>تبریز</option>
+  </select>
+  <select id="sort" onchange="filterCars()">
+   <option value="">مرتب‌سازی</option>
+   <option value="low">ارزان‌ترین</option>
+   <option value="high">گران‌ترین</option>
+  </select>
+ </div>
+ <div class="cars" id="carsList"></div>
+ <div class="empty" id="empty">خودرویی با این مشخصات پیدا نشد.</div>
+</section>
+
+<section id="sell">
+ <div class="formbox">
+  <h2>＋ ثبت آگهی فروش خودرو</h2>
+  <p style="color:#bbb;font-size:13px">فرم نمایشی نسخه اولیه؛ آگهی در همین مرورگر نمایش داده می‌شود.</p>
+  <form id="carForm">
+   <label>نام خودرو</label>
+   <input id="newTitle" placeholder="مثلاً پژو ۲۰۷" required>
+   <label>برند</label>
+   <select id="newBrand" required>
+    <option value="">انتخاب برند</option>
+    <option>ایران خودرو</option><option>سایپا</option>
+    <option>تویوتا</option><option>هیوندای</option><option>کیا</option>
+   </select>
+   <label>سال ساخت</label>
+   <input id="newYear" type="number" placeholder="مثلاً ۱۴۰۲" required>
+   <label>قیمت به تومان</label>
+   <input id="newPrice" type="number" placeholder="مثلاً 850000000" required>
+   <label>شهر</label>
+   <input id="newCity" placeholder="مثلاً تهران" required>
+   <label>شماره تماس</label>
+   <input id="newPhone" type="tel" placeholder="09xxxxxxxxx" required>
+   <button type="submit">ثبت آگهی آزمایشی</button>
+  </form>
+  <p id="message" style="color:#ff9b39"></p>
+ </div>
+</section>
+
+<section id="about">
+ <div class="heading"><h2>درباره <span>ORANGE MOTORS</span></h2></div>
+ <p style="color:#bbb;line-height:2">هدف ما ایجاد بستری برای خرید و فروش خودرو در سراسر ایران است؛ ساده، سریع و قابل اعتماد.</p>
+</section>
+
+<footer>
+ <div class="logo">ORANGE MOTORS</div>
+بازار خودرو ایران | نسخه اولیه نمایشی
+<br>© تمامی حقوق محفوظ است.
+</footer>
+
+<script>
+let cars=[
+ {title:"پژو ۲۰۷ پانوراما",brand:"ایران خودرو",year:1402,price:850000000,city:"تهران",image:"https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=700"},
+ {title:"دنا پلاس توربو",brand:"ایران خودرو",year:1401,price:980000000,city:"اصفهان",image:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=700"},
+ {title:"تویوتا کمری",brand:"تویوتا",year:2018,price:3500000000,city:"مشهد",image:"https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=700"},
+ {title:"هیوندای النترا",brand:"هیوندای",year:2017,price:2200000000,city:"شیراز",image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=700"},
+ {title:"پراید ۱۳۱",brand:"سایپا",year:1399,price:350000000,city:"تبریز",image:"https://images.unsplash.com/photo-1502877338535-766e1452684a?w=700"}
+];
+function toman(n){return Number(n).toLocaleString("fa-IR")+" تومان"}
+function render(list){
+ const box=document.getElementById("carsList");
+ box.innerHTML="";
+ document.getElementById("empty").style.display=list.length?"none":"block";
+ list.forEach(c=>{
+  box.innerHTML+=`<article class="car">
+   <img src="${c.image||"https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=700"}" alt="خودرو">
+   <div class="car-content">
+    <span class="tag">آگهی خودرو</span>
+    <h3>${c.title}</h3>
+    <div class="details">سال ساخت: ${c.year}<br>برند: ${c.brand}<br>شهر: ${c.city}</div>
+    <div class="price">${toman(c.price)}</div>
+    <div class="city">فروشنده: آگهی آزمایشی</div>
+   </div></article>`;
+ });
+}
+function filterCars(){
+ let q=document.getElementById("search").value.trim().toLowerCase();
+ let b=document.getElementById("brand").value;
+ let city=document.getElementById("city").value;
+ let list=cars.filter(c=>(c.title.toLowerCase().includes(q)||c.brand.toLowerCase().includes(q))&&(!b||c.brand===b)&&(!city||c.city===city));
+ let sort=document.getElementById("sort").value;
+ if(sort==="low")list.sort((a,b)=>a.price-b.price);
+ if(sort==="high")list.sort((a,b)=>b.price-a.price);
+ render(list);
+}
+document.getElementById("search").addEventListener("input",filterCars);
+document.getElementById("carForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ let c={title:document.getElementById("newTitle").value,brand:document.getElementById("newBrand").value,year:document.getElementById("newYear").value,price:document.getElementById("newPrice").value,city:document.getElementById("newCity").value,image:""};
+ cars.unshift(c);
+ filterCars();
+ document.getElementById("message").textContent="آگهی به‌صورت آزمایشی اضافه شد.";
+ this.reset();
+ document.getElementById("cars").scrollIntoView({behavior:"smooth"});
+});
+render(cars);
+</script>
+</body>
+</html>
